@@ -21,7 +21,7 @@ public class SquareEquation
             ans[0]=-(b+Math.Sign(b)+Math.Sqrt(d))/2;
         }
         if (d>0 && !(Math.Abs(d)<eps)){
-            ans[0]=-(b+Math.Sign(b)+Math.Sqrt(d))/2;
+            ans[0]=-(b+Math.Sign(b)*Math.Sqrt(d))/2;
             ans[1]=c/ans[0];
         }
         return ans;
