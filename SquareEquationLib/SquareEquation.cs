@@ -9,7 +9,7 @@ public class SquareEquation
         if (Math.Abs(a)<eps){
             throw new System.ArgumentException();
         }
-        if (double.IsNaN(a) || double.IsPositive(a)|| double.IsNaN(b) || double.IsPositive(b) || double.IsNaN(c) || double.IsPositive(c)){
+        if (double.IsNaN(a) || double.IsInfinity(a) || double.IsNaN(b) || double.IsInfinity(b) || double.IsNaN(c) || double.IsInfinity(c)){
             throw new System.ArgumentException();
         }
         double d=Math.Pow(b,2)-4*a*c;
