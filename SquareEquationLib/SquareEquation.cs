@@ -9,14 +9,14 @@ public class SquareEquation
         if (Math.Abs(a)<eps){
             throw new System.ArgumentException();
         }
-        if (a==double.NaN || double.IsPositive(a)|| b==double.NaN || double.IsPositive(b) || c==double.NaN || double.IsPositive(c)){
+        if (double.IsNaN(a) || double.IsPositive(a)|| double.IsNaN(b) || double.IsPositive(b) || double.IsNaN(c) || double.IsPositive(c)){
             throw new System.ArgumentException();
         }
         double d=b*b-4*a*c;
         if (d<0 && !(Math.Abs(d)<eps) ){
             ans=new double[0];
         }
-        if (Math.Abs(d)<eps){
+        if (d < eps){
             ans=new double[1];
             ans[0]=-(b+Math.Sign(b)+Math.Sqrt(d))/2;
         }
