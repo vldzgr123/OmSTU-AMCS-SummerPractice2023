@@ -12,15 +12,15 @@ public class SquareEquation
         if (double.IsNaN(a) || double.IsPositive(a)|| double.IsNaN(b) || double.IsPositive(b) || double.IsNaN(c) || double.IsPositive(c)){
             throw new System.ArgumentException();
         }
-        double d=b*b-4*a*c;
+        double d=Math.Pow(b,2)-4*a*c;
         if (d<0 && !(Math.Abs(d)<eps) ){
             ans=new double[0];
         }
-        if (d < eps){
+        else if (d < eps){
             ans=new double[1];
-            ans[0]=-(b+Math.Sign(b)+Math.Sqrt(d))/2;
+            ans[0]=-(b+Math.Sign(b)*Math.Sqrt(d))/2;
         }
-        if (d>0 && !(Math.Abs(d)<eps)){
+        else{
             ans[0]=-(b+Math.Sign(b)*Math.Sqrt(d))/2;
             ans[1]=c/ans[0];
         }
