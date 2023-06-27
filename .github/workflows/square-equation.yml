@@ -24,3 +24,9 @@ jobs:
 
       - name: Test
         run: ./SquareEquationTest ./SquareEquationLib/bin/Debug/net7.0/SquareEquationLib.dll
+
+      - name: Run tests
+        run: dotnet test Tests/SquareEquation.Tests/
+
+      - name: Check code coverage
+        run: dotnet tool install -g dotnet-reportgenerator-globaltool && dotnet test Tests/SquareEquation.Tests/ --collect:"XPlat Code Coverage" --settings coverlet.runsettings && reportgenerator "-reports:Tests/SquareEquation.Tests/coverage.opencover.xml" "-targetdir:Tests/SquareEquation.Tests/CoverageReport" -reporttypes:"Html;HtmlSummary;JsonSummary"
