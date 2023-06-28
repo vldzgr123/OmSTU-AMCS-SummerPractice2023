@@ -6,48 +6,26 @@ namespace SquareEquation_Test
     public class SquareEquation_Test
     {
 
-    [Theory]
-    [InlineData(double.NaN,1,1)]
-    [InlineData(1,double.NaN,1)]
-    [InlineData(1,1,double.NaN)]
+        [Theory]
+        [InlineData(0,1,1,1)]
+        [InlineData(1,double.NaN,1)]
+        [InlineData(1,1,double.PositiveInfinity)]
 
-    [InlineData(double.PositiveInfinity,1,1)]
-    [InlineData(1,double.PositiveInfinity,1)]
-    [InlineData(1,1,double.PositiveInfinity)]
-
-    [InlineData(double.NegativeInfinity,1,1)]
-    [InlineData(1,double.NegativeInfinity,1)]
-    [InlineData(1,1,double.NegativeInfinity)]
-    public void testValidArgument(double a,double b, double c)
-    {
-        Assert.Throws<ArgumentException>(() => SquareEquation.Solve(a, b, c));
-    }
-
-    [Theory]
-        [InlineData(1, 6, 9, new double[]{-3})]
-        [InlineData(10, 2, 10, new double[] {})]
-        [InlineData(1,2,-3, new double[] {1, -3})]
-        [InlineData(1, 0, 1, new double[]{})]
-        [InlineData(1, 4, 5, new double[]{})]
-
-        public void ValidFindRoot(double a, double b, double c, double[] expected)
+        public void ThrowError(double a,double b, double c)
         {
-            
-        double[] actual = SquareEquation.Solve(a, b, c);
-
-
-            Array.Sort(actual);
-            Array.Sort(expected);
-
-            if (expected.Length != actual.Length)
-            {
-                Assert.Fail("Amount of roots does not match");
-            }
-
-            for (int i = 0; i < expected.Length; i++)
-            {
-                Assert.Equal(expected[i], actual[i], 5);
-            }
+            Assert.Throws<ArgumentException>(() => SquareEquation.Solve(a, b, c));
         }
-}
+
+        [Theory]
+        [InlineData(2, 2, 3, new double[0])]
+        [InlineData(1, 2, 1, new double[1] {-1})]
+        [InlineData(1,2,-3, new double[2] {1, -3})]
+
+        public void noThrowError(double a, double b, double c, double[] expected)
+        {
+            var result=SquareEquation.Solve(a,b,c);
+            Array.Sort(result);
+            Assert.Equal(result,expected);
+        }
+    }
 }

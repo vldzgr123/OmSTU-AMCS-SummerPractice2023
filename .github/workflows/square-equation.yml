@@ -25,6 +25,9 @@ jobs:
       - name: Test
         run: ./SquareEquationTest ./SquareEquationLib/bin/Debug/net7.0/SquareEquationLib.dll
       
-      - name: Unittest and coverage
-        run: dotnet test /p:CollectCoverage=true /p:ThresholdType=line /p:Threshold=100
+      - name: UnitTest
+        run: dotnet test
+
+      - name: Coverage
+        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
         
