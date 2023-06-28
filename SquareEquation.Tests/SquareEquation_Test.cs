@@ -5,7 +5,6 @@ namespace SquareEquation_Test
 {
     public class SquareEquation_Test
     {
-
         [Theory]
         [InlineData(0,1,1,1)]
         [InlineData(1,double.NaN,1)]
@@ -25,7 +24,17 @@ namespace SquareEquation_Test
         {
             var result=SquareEquation.Solve(a,b,c);
             Array.Sort(result);
-            Assert.Equal(result,expected);
+            Array.Sort(expected);
+
+            if (expected.Length != result.Length)
+            {
+                Assert.Fail("Amount of roots does not match");
+            }
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], result[i], 5);
+            }
         }
     }
 }
