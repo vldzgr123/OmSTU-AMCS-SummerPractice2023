@@ -6,10 +6,10 @@ namespace SquareEquation_Test
     public class SquareEquation_Test
     {
         [Theory]
-        [InlineData(0,1,1,1)]
+        [InlineData(0,1,1)]
         [InlineData(1,double.NaN,1)]
         [InlineData(1,1,double.PositiveInfinity)]
-        [InlineData(double.NegativeInfinity,1,double.PositiveInfinity)]
+        [InlineData(double.NegativeInfinity,1,1)]
 
         public void ThrowError(double a,double b, double c)
         {
