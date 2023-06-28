@@ -3,51 +3,51 @@ using SquareEquationLib;
 
 namespace SquareEquation_Test
 {
-    public class SquareEquation_Test{
-     [Fact]
-    public void UnitTest_NoRoots()
+    public class SquareEquation_Test
     {
-        double a=2;
-        double b=2;
-        double c=2;
-        var result=SquareEquation.Solve(a,b,c);
-        Assert.Equal(new double[0],result);
-    }
-    [Fact]
-    public void UnitTest_OneRoots()
+
+    [Theory]
+    [InlineData(double.NaN,1,1)]
+    [InlineData(1,double.NaN,1)]
+    [InlineData(1,1,double.NaN)]
+
+    [InlineData(double.PositiveInfinity,1,1)]
+    [InlineData(1,double.PositiveInfinity,1)]
+    [InlineData(1,1,double.PositiveInfinity)]
+
+    [InlineData(double.NegativeInfinity,1,1)]
+    [InlineData(1,double.NegativeInfinity,1)]
+    [InlineData(1,1,double.NegativeInfinity)]
+    public void testValidArgument(double a,double b, double c)
     {
-        double a=1;
-        double b=2;
-        double c=1;
-        var result=SquareEquation.Solve(a,b,c);
-        Assert.Equal(new double[1]{-1},result);
+        Assert.Throws<ArgumentException>(() => SquareEquation.Solve(a, b, c));
     }
-    [Fact]
-    public void UnitTest_TwoRoots()
-    {
-        double a=1;
-        double b=5;
-        double c=4;
-        var result=SquareEquation.Solve(a,b,c);
-        Assert.Equal(new double[2]{-1,-4},result);
-    }
-    [Fact]
-    public void UnitTest_AZero()
-    {
-        double a=0.1;
-        double b=2;
-        double c=3;
-        var result=SquareEquation.Solve(a,b,c);
-        Assert.Throws<System.ArgumentException>(() => result);
-    }
-    [Fact]
-    public void UnitTest_NaNOrInfinity()
-    {
-        double a=1;
-        double b=double.PositiveInfinity;
-        double c=3;
-        var result=SquareEquation.Solve(a,b,c);
-        Assert.Throws<System.ArgumentException>(() => result);
-    }
+
+    [Theory]
+        [InlineData(1, 6, 9, new double[]{-3})]
+        [InlineData(10, 2, 10, new double[] {})]
+        [InlineData(1,2,-3, new double[] {1, -3})]
+        [InlineData(1, 0, 1, new double[]{})]
+        [InlineData(1, 4, 5, new double[]{})]
+
+        public void ValidFindRoot(double a, double b, double c, double[] expected)
+        {
+            
+        double[] actual = SquareEquation.Solve(a, b, c);
+
+
+            Array.Sort(actual);
+            Array.Sort(expected);
+
+            if (expected.Length != actual.Length)
+            {
+                Assert.Fail("Amount of roots does not match");
+            }
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 5);
+            }
+        }
 }
 }
