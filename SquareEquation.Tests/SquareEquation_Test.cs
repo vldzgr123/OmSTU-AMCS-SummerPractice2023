@@ -3,42 +3,38 @@ using SquareEquationLib;
 
 namespace SquareEquation_Test
 {
-    public class UnitTest1
-{
-    [Fact]
-    public void TwoRoots()
+    public class SquareEquation_Test
     {
-        double[] Answer = SquareEquation.Solve(1, -5, 4);
-        Array.Sort(Answer);
-        double[] expected = {1.0, 4.0};
-        double eps = Math.Pow(10, -9);
-        Assert.Equal(Answer[0], expected[0], eps);
-        Assert.Equal(Answer[1], expected[1], eps);
-    }
+        [Theory]
+        [InlineData(0,1,1,1)]
+        [InlineData(1,double.NaN,1)]
+        [InlineData(1,1,double.PositiveInfinity)]
 
-    [Fact]
-    public void OneRoot()
-    {
-        double[] Answer = SquareEquation.Solve(1, 2, 1);
-        double[] res = {-1.0};
-        double eps = Math.Pow(10, -9);
-        Assert.Equal(Answer[0], res[0], eps);
-    }
+        public void ThrowError(double a,double b, double c)
+        {
+            Assert.Throws<ArgumentException>(() => SquareEquation.Solve(a, b, c));
+        }
 
-    [Fact]
-    public void NoRoots()
-    {
-        double[] Answer = SquareEquation.Solve(1, 1, 4);
-        Assert.True(Answer.Length == 0);
-    }
+        [Theory]
+        [InlineData(2, 2, 3, new double[0])]
+        [InlineData(1, 2, 1, new double[1] {-1})]
+        [InlineData(1,2,-3, new double[2] {1, -3})]
 
-    [Theory]
-    [InlineData(0, 4, 1)]
-    [InlineData(1, double.NaN, -4)]
-    [InlineData(1, 4, double.NegativeInfinity)]
-    public void CauseErrors(double value1, double value2, double value3)
-    {
-        Assert.Throws<System.ArgumentException>(() => SquareEquation.Solve(value1, value2, value3));
+        public void noThrowError(double a, double b, double c, double[] expected)
+        {
+            var result=SquareEquation.Solve(a,b,c);
+            Array.Sort(result);
+            Array.Sort(expected);
+
+            if (expected.Length != result.Length)
+            {
+                Assert.Fail("Amount of roots does not match");
+            }
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], result[i], 5);
+            }
+        }
     }
-}
 }
