@@ -9,6 +9,7 @@ namespace SquareEquation_Test
         [InlineData(0,1,1,1)]
         [InlineData(1,double.NaN,1)]
         [InlineData(1,1,double.PositiveInfinity)]
+        [InlineData(double.NegativeInfinity,1,double.PositiveInfinity)]
 
         public void ThrowError(double a,double b, double c)
         {
