@@ -16,5 +16,5 @@ public class ServiceLocator
     {
         return store[key].Invoke();
     }
-
+    
 }
