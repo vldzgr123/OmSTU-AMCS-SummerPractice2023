@@ -5,25 +5,28 @@ namespace SquareEquation.TestsBDD.Steps
     [Binding]
     public sealed class SquareEquationStepDefinitions
     {
-       private double[] odds = new double[3];
-       private double[] result = new double[2];
-       private Exception except = new Exception(); 
+       
+       // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
+
+       private double[] coef {get; set;}
+       private double[] result {get; set;}
+       private Exception except {get; set;} 
 
        [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), (.*)\)")]
        public void SquareEqGiven(string a, string b, string c)
        {
-            this.odds = new double[3];
-            string[] odds = {a, b, c};
+            this.coef = new double[3];
+            string[] coefs = {a, b, c};
             
             for(var i = 0; i < 3; i++){
-                if (odds[i] == "Double.PositiveInfinity")
-                    this.odds[i] = double.PositiveInfinity;
-                else if (odds[i] == "Double.NegativeInfinity")
-                    this.odds[i] = double.NegativeInfinity;
-                else if (odds[i] == "NaN")
-                    this.odds[i] = double.NaN;
+                if (coefs[i] == "Double.PositiveInfinity")
+                    this.coef[i] = double.PositiveInfinity;
+                else if (coefs[i] == "Double.NegativeInfinity")
+                    this.coef[i] = double.NegativeInfinity;
+                else if (coefs[i] == "NaN")
+                    this.coef[i] = double.NaN;
                 else
-                    this.odds[i] = double.Parse(odds[i]);
+                    this.coef[i] = double.Parse(coefs[i]);
             }
        }
         
@@ -31,7 +34,7 @@ namespace SquareEquation.TestsBDD.Steps
        public void SqEqSolve()
        {
            try{
-                this.result = SquareEquationLib.SquareEquation.Solve(odds[0], odds[1], odds[2]);
+                this.result = SquareEquationLib.SquareEquation.Solve(coef[0], coef[1], coef[2]);
            }
            catch(ArgumentException e){
                 except = e;
