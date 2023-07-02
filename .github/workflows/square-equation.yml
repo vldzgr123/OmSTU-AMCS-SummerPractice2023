@@ -1,8 +1,8 @@
-name: unit_test
+name: bdd_tests
 
 on:
   push:
-    branches: ["unit_tests"]
+    branches: ["bdd_tests"]
 
 jobs:
   build:
