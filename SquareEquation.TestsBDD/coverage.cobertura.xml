@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.7241" branch-rate="0.95" version="1.9" timestamp="1688313650" lines-covered="21" lines-valid="29" branches-covered="19" branches-valid="20">
+<coverage line-rate="0.7241" branch-rate="0.95" version="1.9" timestamp="1688319708" lines-covered="21" lines-valid="29" branches-covered="19" branches-valid="20">
   <sources>
     <source>/home/ubuntu/OmSTU-AMCS-SummerPractice2023/SquareEquationLib/</source>
   </sources>
