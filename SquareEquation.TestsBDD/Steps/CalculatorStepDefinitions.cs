@@ -1,4 +1,7 @@
+using SquareEquationLib;
 using TechTalk.SpecFlow;
+using FluentAssertions;
+using System;
 
 namespace SquareEquation.TestsBDD.Steps
 {
