@@ -1,63 +1,142 @@
-using Newtonsoft.Json.Linq;
 using SquareEquationLib;
-using System;
-using System.Globalization;
 using TechTalk.SpecFlow;
-
-namespace SpecFlowTestingProject.StepDefinitions
+namespace UnitTes1
 {
     [Binding]
-    public class SolveStepDefinitions
+    public class BDD
     {
-        private double[] array = new double[3];
-        private double[]? result;
-        Exception exception = new();
-
+        private ScenarioContext scenarioContext;
+        private double a;
+        private double b;
+        private double c;
+        public BDD(ScenarioContext input)
+        {
+            scenarioContext = input;
+        }
         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), (.*)\)")]
-        public void GivenCofficients(string p0, string p1, string p2)
-        {
-            double _p0 = double.Parse(p0, System.Globalization.CultureInfo.InvariantCulture);
-            double _p1 = double.Parse(p1, System.Globalization.CultureInfo.InvariantCulture);
-            double _p2 = double.Parse(p2, System.Globalization.CultureInfo.InvariantCulture);
+         public void Input_with_real_numbers(double koef1, double koef2, double koef3)
+         {
+             a = koef1;
+             b = koef2;
+             c = koef3;
+         }
 
-            array = new double[] { _p0, _p1, _p2 };
-        }
-
+         [Given(@"Квадратное уравнение с коэффициентами \(NaN, (.*), (.*)\)")]
+         public void Input_with_firstNan(double koef1, double koef2)
+         {
+             a = double.NaN;
+             b = koef1;
+             c = koef2;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \((.*), NaN, (.*)\)")]
+         public void Input_with_secondNan(double koef1, double koef2)
+         {
+             a = koef1;
+             b = double.NaN;
+             c = koef2;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), NaN\)")]
+         public void Input_with_thirdNan(double koef1, double koef2)
+         {
+             a = koef1;
+             b = koef2;
+             c = double.NaN;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \(Double\.NegativeInfinity, (.*), (.*)\)")]
+         public void Input_with_firstNI(double koef1, double koef2)
+         {
+             a = double.NegativeInfinity;
+             b = koef1;
+             c = koef2;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \((.*), Double\.NegativeInfinity, (.*)\)")]
+         public void Input_with_secondNI(double koef1, double koef2)
+         {
+             a = koef1;
+             b = double.NegativeInfinity;
+             c = koef2;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), Double\.NegativeInfinity\)")]
+         public void Input_with_thirdNI(double koef1, double koef2)
+         {
+             a = koef1;
+             b = koef2;
+             c = double.NegativeInfinity;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \(Double\.PositiveInfinity, (.*), (.*)\)")]
+         public void Input_with_firstPI(double koef1, double koef2)
+         {
+             a = double.PositiveInfinity;
+             b = koef1;
+             c = koef2;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \((.*), Double\.PositiveInfinity, (.*)\)")]
+         public void Input_with_secondPI(double koef1, double koef2)
+         {
+             a = koef1;
+             b = double.PositiveInfinity;
+             c = koef2;
+         }
+         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), Double\.PositiveInfinity\)")]
+         public void Input_with_thirdPI(double koef1, double koef2)
+         {
+             a = koef1;
+             b = koef2;
+             c = double.PositiveInfinity;
+         }
         [When(@"вычисляются корни квадратного уравнения")]
-        public void WhenSolvingTheRoots()
+        public void try_to_solve()
         {
-            try
-            {
-                result = SquareEquation.Solve(array[0], array[1], array[2]);
+            try{
+                var result = SquareEquation.Solve(a,b,c);
             }
-            catch (ArgumentException ex)
-            {
-                exception = ex;
+            catch{
             }
         }
-
-        [Then (@"квадратное уравнение имеет два корня \((.*), (.*)\) кратности один")]
-        public void ThenHave2Solutions(double p0, double p1)
+       [Then(@"квадратное уравнение имеет два корня \((.*), (.*)\) кратности один")]
+        public void Test_for_two_roots(double koef1, double koef2)
         {
-            result.Should().Equal(new double[] { p0, p1 });
+            var SquareEquation = new SquareEquation();
+            double[] result = SquareEquation.Solve(a,b,c);
+
+            double[] expected = new double[] {koef1, koef2};
+
+            Assert.Equal(expected, result);
         }
 
         [Then(@"квадратное уравнение имеет один корень (.*) кратности два")]
-        public void ThenHave1Solutions(double p0)
-        {
-            result.Should().Equal(new double[] { p0 });
-        }
+         public void Test_for_one_root(double koef1)
+         {
+            var SquareEquation = new SquareEquation();
 
-        [Then(@"множество корней квадратного уравнения пустое")]
-        public void ThenHaveNoSolutions()
-        {
-            result.Should().Equal(Array.Empty<double>());
-        }
+            double[] result = SquareEquation.Solve(a,b,c);
+            double[] expected = new double[] {koef1};
 
-        [Then(@"выбрасывается исключение ArgumentException")]
-        public void ThenThrowArgumentException()
-        {
-            Assert.Equal("Invalid Values", exception.Message);
-        }
+            Assert.Equal(expected, result);
+         }
+
+         [Then(@"множество корней квадратного уравнения пустое")]
+         public void Test_for_no_roots()
+         {
+            var SquareEquation = new SquareEquation();
+
+            double[] result = SquareEquation.Solve(a,b,c);
+            Assert.Empty(result);
+         }
+
+         [Then(@"выбрасывается исключение ArgumentException")]
+         public void Test_for_Exception()
+         {
+            var argExc= new ArgumentException();
+
+            try
+            {
+                var result = SquareEquation.Solve(a,b,c);
+            }
+            catch (Exception ex)
+            {
+                Assert.Equal(ex.GetType(), argExc.GetType());
+            }
+         }
     }
 }
