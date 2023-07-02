@@ -1,142 +1,90 @@
+namespace BDD;
 using SquareEquationLib;
 using TechTalk.SpecFlow;
-namespace UnitTes1
+
+
+[Binding]
+public class StepDefinitions
 {
-    [Binding]
-    public class BDD
+    private double eps = 1e-5;
+    private double[] coef = new double[3];
+    private double[] ans = new double[0];
+    private Exception r_exp = new Exception();
+    private SquareEquation squareEquation = new SquareEquation();
+    [When("вычисляются корни квадратного уравнения")]
+    public void CalculatedTheRootsOfTheSquareEquation()
     {
-        private ScenarioContext scenarioContext;
-        private double a;
-        private double b;
-        private double c;
-        public BDD(ScenarioContext input)
+        try 
         {
-            scenarioContext = input;
+            ans = squareEquation.Solve(coef[0],coef[1],coef[2]);
         }
-        [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), (.*)\)")]
-         public void Input_with_real_numbers(double koef1, double koef2, double koef3)
-         {
-             a = koef1;
-             b = koef2;
-             c = koef3;
-         }
-
-         [Given(@"Квадратное уравнение с коэффициентами \(NaN, (.*), (.*)\)")]
-         public void Input_with_firstNan(double koef1, double koef2)
-         {
-             a = double.NaN;
-             b = koef1;
-             c = koef2;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \((.*), NaN, (.*)\)")]
-         public void Input_with_secondNan(double koef1, double koef2)
-         {
-             a = koef1;
-             b = double.NaN;
-             c = koef2;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), NaN\)")]
-         public void Input_with_thirdNan(double koef1, double koef2)
-         {
-             a = koef1;
-             b = koef2;
-             c = double.NaN;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \(Double\.NegativeInfinity, (.*), (.*)\)")]
-         public void Input_with_firstNI(double koef1, double koef2)
-         {
-             a = double.NegativeInfinity;
-             b = koef1;
-             c = koef2;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \((.*), Double\.NegativeInfinity, (.*)\)")]
-         public void Input_with_secondNI(double koef1, double koef2)
-         {
-             a = koef1;
-             b = double.NegativeInfinity;
-             c = koef2;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), Double\.NegativeInfinity\)")]
-         public void Input_with_thirdNI(double koef1, double koef2)
-         {
-             a = koef1;
-             b = koef2;
-             c = double.NegativeInfinity;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \(Double\.PositiveInfinity, (.*), (.*)\)")]
-         public void Input_with_firstPI(double koef1, double koef2)
-         {
-             a = double.PositiveInfinity;
-             b = koef1;
-             c = koef2;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \((.*), Double\.PositiveInfinity, (.*)\)")]
-         public void Input_with_secondPI(double koef1, double koef2)
-         {
-             a = koef1;
-             b = double.PositiveInfinity;
-             c = koef2;
-         }
-         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), Double\.PositiveInfinity\)")]
-         public void Input_with_thirdPI(double koef1, double koef2)
-         {
-             a = koef1;
-             b = koef2;
-             c = double.PositiveInfinity;
-         }
-        [When(@"вычисляются корни квадратного уравнения")]
-        public void try_to_solve()
+        catch (Exception e)
         {
-            try{
-                var result = SquareEquation.Solve(a,b,c);
-            }
-            catch{
-            }
+            r_exp =  e;
         }
-       [Then(@"квадратное уравнение имеет два корня \((.*), (.*)\) кратности один")]
-        public void Test_for_two_roots(double koef1, double koef2)
+    }
+    [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), (.*)\)")]
+    public void GivenSqaureEquationCoefficients(string a1, string b1, string c1) 
+    {
+        string[] in_coef = new string[] {a1, b1, c1};
+        
+        for (int i = 0; i < 3; i++)
         {
-            var SquareEquation = new SquareEquation();
-            double[] result = SquareEquation.Solve(a,b,c);
-
-            double[] expected = new double[] {koef1, koef2};
-
-            Assert.Equal(expected, result);
+            if (in_coef[i] == "Double.NegativeInfinity")
+                coef[i] = double.NegativeInfinity;
+            else if (in_coef[i] == "Double.PositiveInfinity")
+                coef[i] = double.PositiveInfinity;
+            else if (in_coef[i] == "NaN")
+                coef[i] = double.NaN;
+            else
+                coef[i] = Convert.ToDouble(in_coef[i]);
+        }
+    }
+    [Then("выбрасывается исключение ArgumentException")]
+    public void ThrowingArgumentException()
+    {
+        Assert.ThrowsAsync<ArgumentException>(() => throw r_exp);
+    }
+    
+    [Then(@"квадратное уравнение имеет один корень (.*) кратности два")]
+    public void QuadraticEquationHasOneRoot(double x1)
+    {
+        double[] r_ans = new double[] {x1};
+        bool result = false;
+        
+        if (Math.Abs(ans[0] - r_ans[0]) < eps)
+        {
+            result = true;
         }
 
-        [Then(@"квадратное уравнение имеет один корень (.*) кратности два")]
-         public void Test_for_one_root(double koef1)
-         {
-            var SquareEquation = new SquareEquation();
+        Assert.True(result, "Incorrect");
+    }
 
-            double[] result = SquareEquation.Solve(a,b,c);
-            double[] expected = new double[] {koef1};
+    [Then(@"квадратное уравнение имеет два корня \((.*), (.*)\) кратности один")]
+    public void QuadraticEquationHasTwoRoots(double x1, double x2)
+    {
+        double[] r_ans = new double[] {x1, x2};
+        bool result = false;
+        Array.Sort(r_ans);
+        
+        if (Math.Abs(ans[0] - r_ans[0]) < eps & Math.Abs(ans[1] - r_ans[1]) < eps)
+        {
+            result = true;
+        }
 
-            Assert.Equal(expected, result);
-         }
+        Assert.True(result, "Incorrect");
+    }
 
-         [Then(@"множество корней квадратного уравнения пустое")]
-         public void Test_for_no_roots()
-         {
-            var SquareEquation = new SquareEquation();
+    [Then(@"множество корней квадратного уравнения пустое")]
+    public void SqaureEquationHasNoRoots()
+    {
+        double[] r_ans = new double[]{};
+        bool result = false;
+        if (ans.Length == 0 & r_ans.Length == 0)
+        {
+            result = true;
+        }
 
-            double[] result = SquareEquation.Solve(a,b,c);
-            Assert.Empty(result);
-         }
-
-         [Then(@"выбрасывается исключение ArgumentException")]
-         public void Test_for_Exception()
-         {
-            var argExc= new ArgumentException();
-
-            try
-            {
-                var result = SquareEquation.Solve(a,b,c);
-            }
-            catch (Exception ex)
-            {
-                Assert.Equal(ex.GetType(), argExc.GetType());
-            }
-         }
+        Assert.True(result, "Incorrect");
     }
 }
