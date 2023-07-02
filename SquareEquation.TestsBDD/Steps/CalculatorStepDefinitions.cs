@@ -1,5 +1,5 @@
 namespace BDD;
-using SquareEquationLib;
+using SquareEquation;
 using TechTalk.SpecFlow;
 
 
