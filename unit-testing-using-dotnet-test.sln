@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquareEquationLib", "SquareEquationLib\SquareEquationLib.csproj", "{B19CE9F8-EE36-498E-A9A0-532A021353D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquareEquationLib", "SquareEquationLib\SquareEquationLib.csproj", "{DB469974-F043-40BC-B812-0CB660180DBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquareEquation.TestsBDD", "SquareEquation.TestsBDD\SquareEquation.TestsBDD.csproj", "{807E3E1A-5832-4F27-951B-B3449660E274}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquareEquation.TestsBDD", "SquareEquation.TestsBDD\SquareEquation.TestsBDD.csproj", "{3C58EE24-96FC-4C6B-BE67-26BF3E17CDD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B19CE9F8-EE36-498E-A9A0-532A021353D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B19CE9F8-EE36-498E-A9A0-532A021353D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B19CE9F8-EE36-498E-A9A0-532A021353D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B19CE9F8-EE36-498E-A9A0-532A021353D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{807E3E1A-5832-4F27-951B-B3449660E274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{807E3E1A-5832-4F27-951B-B3449660E274}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{807E3E1A-5832-4F27-951B-B3449660E274}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{807E3E1A-5832-4F27-951B-B3449660E274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB469974-F043-40BC-B812-0CB660180DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB469974-F043-40BC-B812-0CB660180DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB469974-F043-40BC-B812-0CB660180DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB469974-F043-40BC-B812-0CB660180DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C58EE24-96FC-4C6B-BE67-26BF3E17CDD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C58EE24-96FC-4C6B-BE67-26BF3E17CDD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C58EE24-96FC-4C6B-BE67-26BF3E17CDD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C58EE24-96FC-4C6B-BE67-26BF3E17CDD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
