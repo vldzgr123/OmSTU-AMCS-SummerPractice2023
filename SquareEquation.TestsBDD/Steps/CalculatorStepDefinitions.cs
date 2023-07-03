@@ -10,29 +10,30 @@ namespace SquareEquationLib.TestsBDD.Steps
 {
 
     [Binding]
-    public sealed class StepDefinitions
+    public class StepDefinitions
     {
-
-        private const double eps = 1e-7;
+        private const double eps = 10e-7;
         private double[] _odds = new double[3];
         private double[] _roots = new double[0];
-        private Exception _actualException = new Exception();
-
+        private Exception _exception = new Exception();
         [When("вычисляются корни квадратного уравнения")]
-        public void GetRoots()
+        public void EvaluateEquationRoots()
         {
             try
             {
-                _roots = SquareEquation.Solve(_odds[0], _odds[1], _odds[2]);
+                _roots = SquareEquation.Solve(
+                    _odds[0],
+                    _odds[1],
+                    _odds[2]
+                );
             }
-            catch (Exception a)
+            catch (Exception e)
             {
-                _actualException = a;
+                _exception = e;
             }
         }
-
         [Given(@"Квадратное уравнение с коэффициентами \((.*), (.*), (.*)\)")]
-        public void SquareEquationOdds(string a, string b, string c)
+        public void GiveSqaureEquationCoefficients(string a, string b, string c)
         {
             string[] inputOdds = new string[] { a.Split(".")[^1], b.Split(".")[^1], c.Split(".")[^1] };
 
@@ -40,33 +41,20 @@ namespace SquareEquationLib.TestsBDD.Steps
             {
                 if (inputOdds[i] == "NegativeInfinity")
                     _odds[i] = double.NegativeInfinity;
-                if (inputOdds[i] == "PositiveInfinity")
+                else if (inputOdds[i] == "PositiveInfinity")
                     _odds[i] = double.PositiveInfinity;
-                if (inputOdds[i] == "NaN")
+                else if (inputOdds[i] == "NaN")
                     _odds[i] = double.NaN;
                 else
-                    _odds[i] = Convert.ToDouble(inputOdds[i]);
+                    _odds[i] = double.Parse(inputOdds[i]);
             }
         }
-
-        [Then(@"квадратное уравнение имеет два корня \((.*), (.*)\) кратности один")]
-        public void ExistsTwoRootsOne(double a, double b)
+        [Then("выбрасывается исключение ArgumentException")]
+        public void ThrowingArgumentException()
         {
-            double[] expectedRoots = new double[] { a, b };
-
-            Array.Sort(expectedRoots);
-            Array.Sort(_roots);
-
-            if (_roots.Length != 2)
-            {
-                Assert.True(false, "Message");
-            }
-
-            for (int i = 0; i < expectedRoots.Length; i++)
-            {
-                Assert.Equal(_roots[i], expectedRoots[i]);
-            }
+            Assert.ThrowsAsync<ArgumentException>(() => throw _exception);
         }
+
         [Then(@"квадратное уравнение имеет один корень (.*) кратности два")]
         public void SquareEquationHasOneRoot(double x)
         {
@@ -82,11 +70,30 @@ namespace SquareEquationLib.TestsBDD.Steps
                 Assert.Equal(_roots[i], expectedRoots[i]);
             }
         }
-        [Then("выбрасывается исключение ArgumentException")]
-        public void ThrowingArgumentException()
+
+        [Then(@"квадратное уравнение имеет два корня \((.*), (.*)\) кратности один")]
+        public void SqaureEquationHasTwoRoots(double x1, double x2)
         {
-            Assert.ThrowsAsync<ArgumentException>(() => throw _actualException);
+            double[] expectedRoots = new double[] { x1, x2 };
+
+            Array.Sort(expectedRoots);
+            Array.Sort(_roots);
+
+            if (_roots.Length != 2)
+            {
+                Assert.True(false, "Message");
+            }
+
+            for (int i = 0; i < expectedRoots.Length; i++)
+            {
+                Assert.Equal(_roots[i], expectedRoots[i]);
+            }
+        }
+
+        [Then(@"множество корней квадратного уравнения пустое")]
+        public void SqaureEquationHasNoRoots()
+        {
+            Assert.Empty(_roots);
         }
     }
-
 }
