@@ -21,11 +21,7 @@ namespace SquareEquationLib.TestsBDD.Steps
         {
             try
             {
-                _roots = SquareEquation.Solve(
-                    _odds[0],
-                    _odds[1],
-                    _odds[2]
-                );
+                _roots = SquareEquation.Solve(_odds[0], _odds[1], _odds[2] );
             }
             catch (Exception e)
             {
