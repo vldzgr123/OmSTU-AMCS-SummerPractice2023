@@ -1,8 +1,8 @@
-name: square equation test
+name: spacebattle
 
 on:
   push:
-    branches: ["square_equation"]
+    branches: ["spacebattle"]
 
 jobs:
   build:
@@ -29,4 +29,4 @@ jobs:
         run: dotnet test Tests/SquareEquation.Tests/
 
       - name: Check code coverage
-        run: dotnet tool install -g dotnet-reportgenerator-globaltool && dotnet test Tests/SquareEquation.Tests/ --collect:"XPlat Code Coverage" --settings coverlet.runsettings && reportgenerator "-reports:Tests/SquareEquation.Tests/coverage.opencover.xml" "-targetdir:Tests/SquareEquation.Tests/CoverageReport" -reporttypes:"Html;HtmlSummary;JsonSummary"
+        run: cd SpaceBattleProject && dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
