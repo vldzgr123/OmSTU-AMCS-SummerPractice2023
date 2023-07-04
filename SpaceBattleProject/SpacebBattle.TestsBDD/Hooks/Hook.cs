@@ -6,6 +6,6 @@ namespace SpacebBattle.TestsBDD.Hooks
     [Binding]
     public class Hooks
     {
-        
+
     }
 }
