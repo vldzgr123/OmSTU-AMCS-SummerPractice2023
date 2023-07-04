@@ -12,9 +12,14 @@ namespace SpacebBattle.TestsBDD.Steps
 
 
        [Given(@"космический корабль находится в точке пространства с координатами \((.*), (.*)\)")]
-       public void GivenTheFirstNumberIs(int number)
+       public void GivenTheFirstNumberIs(double x, double y)
        {
-           
+            double[] coordinates=new double[2]{x,y};
+            try {
+                _spaceShip.SetCoordinates(coordinates);
+            }
+            catch
+
        }
 
        [Given("the second number is (.*)")]
@@ -32,11 +37,9 @@ namespace SpacebBattle.TestsBDD.Steps
         
         
        [When("происходит прямолинейное равномерное движение без деформации")]
-       public void WhenTheTwoNumbersAreAdded()
+       public void MovementSpaceShip(double[] coordinates,double[] speed)
        {
-           //TODO: implement act (action) logic
-
-           _scenarioContext.Pending();
+           
        }
 
        [Then("the result should be (.*)")]
