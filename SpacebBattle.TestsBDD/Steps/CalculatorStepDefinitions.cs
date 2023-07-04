@@ -1,3 +1,5 @@
+using System;
+using Xunit;
 using TechTalk.SpecFlow;
 using SpaceBattle;
 
@@ -7,19 +9,14 @@ namespace SpacebBattle.TestsBDD.Steps
     public sealed class CalculatorStepDefinitions
     {
        
-       private SpaceBattle _spaceShip = new SpaceBattle();
+       private SpaceShip _spaceShip = new SpaceShip();
         private Exception _actualException = new Exception();
 
 
        [Given(@"космический корабль находится в точке пространства с координатами \((.*), (.*)\)")]
        public void GivenTheFirstNumberIs(double x, double y)
        {
-            double[] coordinates=new double[2]{x,y};
-            try {
-                _spaceShip.SetCoordinates(coordinates);
-            }
-            catch
-
+            _spaceShip.SetCoordinates(new double[2]{x,y});
        }
 
        [Given("the second number is (.*)")]

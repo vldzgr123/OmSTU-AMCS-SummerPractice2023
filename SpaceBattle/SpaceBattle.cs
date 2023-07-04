@@ -1,5 +1,9 @@
-﻿namespace SpaceBattle;
-public class SpaceBattle
+﻿using System;
+
+
+namespace SpaceBattle;
+
+public class SpaceShip
 {
     public double[] coordinates=new double[2]{double.NaN,double.PositiveInfinity};
     public double[] speed= new double[2]{double.PositiveInfinity,double.NaN};
@@ -9,7 +13,6 @@ public class SpaceBattle
     public void SetSpeed(double[] speed){
         this.speed=speed;
     }
-    public SpaceBattle() {}
     public bool CheckCoordinates(double[] CoordinatesOrSpeed){
         foreach(var coord in CoordinatesOrSpeed){
             if(double.IsNaN(coord)||double.IsInfinity(coord)){
@@ -26,7 +29,7 @@ public class SpaceBattle
             return newCoordinates;
         }
         else{
-            return new Exception();
+            throw new Exception();
         }
     }
 }
