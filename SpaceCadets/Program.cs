@@ -7,23 +7,23 @@ string path_output = args[1];
 string file_input = File.ReadAllText(path_input);
 dynamic file_input_json = JsonConvert.DeserializeObject(file_input) ?? new JObject();
 List<Cadet> cadets = file_input_json.data.ToObject<List<Cadet>>();
-string task_name = file_input_json.task_name;
+string task_name = file_input_json.taskName;
 List<dynamic> result;
 switch (task_name)
 {
     case "GetStudentsWithHighestGPA":
-            result = GetStudentsWithHighestGPA(cadets);
-            break;
+        result = GetStudentsWithHighestGPA(cadets);
+        break;
     case "CalculateGPAByDiscipline":
-            result = CalculateGPAByDiscipline(cadets);
-            break;
+        result = CalculateGPAByDiscipline(cadets);
+        break;
     case "GetBestGroupsByDiscipline":
-            result = GetBestGroupsByDiscipline(cadets);
-            break;
+        result = GetBestGroupsByDiscipline(cadets);
+        break;
     default:
         throw new Exception();
 }
-string output_file_json = JsonConvert.SerializeObject(new { Response = result },Formatting.Indented);
+string output_file_json = JsonConvert.SerializeObject(new { Response = result }, Formatting.Indented);
 File.WriteAllText(path_output, output_file_json);
 
 
@@ -73,10 +73,11 @@ static List<dynamic> GetBestGroupsByDiscipline(List<Cadet> cadets)
 
 class Cadet
 {
-    public string Name="";
-    public string Group="";
-    public string Discipline="";
+    public string Name = "";
+    public string Group = "";
+    public string Discipline = "";
     public int Mark;
 }
+
 
 
