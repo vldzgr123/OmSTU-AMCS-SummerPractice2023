@@ -78,6 +78,3 @@ class Cadet
     public string Discipline = "";
     public int Mark;
 }
-
-
-
